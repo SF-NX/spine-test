@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+
+
+
+<div role="tabpanel" class="tab-pane active" id="team9" style="position:absolute;left:50%;top:50%;transform: translate(-50%,-50%); color:white;text-align:center;">
+    <div class="crosscore-character-pic">
+    <div class="crosscore-character-pifu">
+    <div class="skin-back" style="display:none;">&lt;</div>
+    <div class="skin-next" style="display:none;">&gt;</div>
+    <div class="pifu-ge active"><!-- 引入必要的 JS 和 CSS -->
+    
+    <link rel="stylesheet" href="https://wiki.biligame.com/crosscore/MediaWiki:Spine-player.css?action=raw&amp;ctype=text/css">
+    <script src="https://wiki.biligame.com/crosscore/MediaWiki:Spine-player.js?action=raw&amp;ctype=text/javascript"></script>
+    <style>
+    /* 手机端样式 */
+    @media screen and (max-width: 600px) {
+      /* 设置触发盒子的 z-index 值，确保它在所有盒子的上面 */
+      #pifutriggerbox {
+          z-index: 9999;
+          position: absolute; 
+          top: 50%; 
+          left: 50%; 
+          transform: translate(-50%, -160%);
+          width: 15%; 
+          height: 15%;
+          cursor: pointer;
+      }
+       #pifuspinecontent{
+           position: relative; 
+           width: 100%; 
+           padding-bottom: 80%;
+    } 
+    }
+    
+    /* 平板/桌面端样式 */
+    @media screen and (min-width: 601px) {
+      /* 设置触发盒子的 z-index 值，确保它在所有盒子的上面 */
+      #pifutriggerbox {
+          z-index: 9999;
+          position: absolute; 
+          top: 50%; 
+          left: 50%; 
+          transform: translate(-50%, -50%);
+          width: 15%; 
+          height: 15%;
+          cursor: pointer;
+      }
+      
+     #pifuspinecontent{
+     position: relative; 
+     width: 100%; 
+     padding-bottom: 56%;
+     
+    } 
+    }
+    
+    
+    
+    </style>
+    
+    <!-- 创建一个相对定位的父容器 -->
+    <div id="pifuspinecontent">
+    
+        <!-- 第一个动画的容器（上层） -->
+        <div id="player-containerpifu1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+    
+        <!-- 点击触发加载 Spine 动画的盒子 -->
+        <div id="pifutriggerbox"> <img src="https://wiki.biligame.com/crosscore/特殊:重定向/file/文件:播放键.png" alt="播放键图片"> </div>
+    </div>
+    
+    <script>
+    // 监听触发加载的盒子的点击事件和触摸事件
+    var triggerbox = document.getElementById("pifutriggerbox");
+    var playercontainer1 = document.getElementById("pifuspinecontent");
+    pifutriggerbox.addEventListener("click", function(){
+    
+    
+        new spine.SpinePlayer("player-containerpifu1", {
+        atlasUrl: "https://raw.githubusercontent.com/SF-NX/spine-test/main/60090skinCurtana03.atlas.odg",
+        jsonUrl: "https://raw.githubusercontent.com/SF-NX/spine-test/main/60090skinCurtana03.skel.odg",
+        showControls: false, // 隐藏播放器控件
+        animation: "in",
+         alpha: true, 
+          backgroundColor: "#00000000",
+         
+        backgroundImage: { 
+        url: "https://patchwiki.biligame.com/images/crosscore/f/f4/cksppffmyvwza6pzvew5jg6lf7t42l9.png",
+        x: 0,
+        y: 0, },
+        premultipliedAlpha: false,
+        viewport: {
+        x: 0,
+        y: 0,
+        width: 2048,
+        height: 2048,
+        padLeft: "98%",
+        padRight: "5%",
+        padTop: "7%",
+        padBottom: "7%" },
+
+        
+    
+    
+     success: function (player) {
+          player.animationState.addAnimation(0, "click1", false, 0),
+          player.animationState.addAnimation(0, "click2", false, 0),
+          player.animationState.addAnimation(0, "click3", true, 0);
+        //   player.animationState.addAnimation(0, "idle", false, 0);
+          /*可以添加后续的队列动画
+          skeleton.AnimationState.AddAnimation(层级（int），要播放的动画名（string），是否循环（bool），延迟多久播放（float）);
+          */
+          if (playercontainer1.requestFullscreen) {
+                    playercontainer1.requestFullscreen();
+                } else if (playercontainer1.mozRequestFullScreen) { 
+                    playercontainer1.mozRequestFullScreen();
+                } else if (playercontainer1.webkitRequestFullscreen) { 
+                    playercontainer1.webkitRequestFullscreen();
+                } else if (playercontainer1.msRequestFullscreen) { 
+                    playercontainer1.msRequestFullscreen();
+                }
+    
+    
+    
+    
+    function exitFullscreenWithTransition(element) {
+        // 添加过渡效果
+        element.style.transition = "all 0.5s";
+        element.style.transform = "scale(0.5)";
+    
+        // 等待过渡效果完成后，再退出全屏
+        setTimeout(function() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { 
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { 
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { 
+                document.msExitFullscreen();
+            }
+    
+            // 过渡效果完成后，清除样式
+            element.style.transition = "";
+            element.style.transform = "";
+    
+    
+    
+    
+    
+    setTimeout(function(){
+                    // 获取player-containerpifu1盒子的位置信息
+                const distance = document.getElementById('player-containerpifu1').getBoundingClientRect();
+                // 计算滚动距离，使distance盒子位于正中间
+                const scrollY = distance.top - window.innerHeight / 2 + distance.height / 2;
+                // 滚动页面
+                window.scrollTo({
+                    top: scrollY,
+                    behavior: 'auto' // 立即跳转，不使用平滑滚动效果
+                });
+            console.log('函数成功运行');
+    }, 100);
+    
+        }, 500);  // 这里的500是过渡效果的持续时间，单位是毫秒
+    }
+    
+    
+
+    
+    
+    
+       },
+    });
+    
+    
+    
+      
+        // 移除触发加载的盒子，避免重复加载
+        this.remove();
+     
+    
+    
+    
+    
+    
+    
+    });
+    
+    // document.getElementById('pifutriggerbox').addEventListener('touchstart', function() {
+    
+    
+    
+    
+    //     new spine.SpinePlayer("player-containerpifu1", {
+    //     atlasUrl: "https://raw.githubusercontent.com/SF-NX/spine-test/main/60090skinCurtana03.atlas.odg",
+    //     jsonUrl: "https://raw.githubusercontent.com/SF-NX/spine-test/main/60090skinCurtana03.skel.odg",
+    //     showControls: false, // 隐藏播放器控件
+    //     animation: "in",
+    //      success: function (player) {
+    //       player.animationState.addAnimation(0, "idle", true, 0);
+    //    },
+    //    premultipliedAlpha: false,
+    //     alpha: true,
+    //      backgroundColor: "#00000000",
+    //     viewport: {
+    //     x: 0,
+    //     y: 0,
+    //     width: 2048,
+    //     height: 2048,
+    //     padLeft: "100%",
+    //     padRight: "5%",
+    //     padTop: "5%",
+    //     padBottom: "5%"
+    //  }
+    // });
+    
+    
+    
+    //     // 移除触发加载的盒子，避免重复加载
+    //     this.remove();
+    // });
+    
+    </script></div>
+    </div>
+    </div>
+    </div>
+
+
+
+</body>
+</html>
